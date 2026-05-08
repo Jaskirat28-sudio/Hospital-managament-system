@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h2 style="text-align:center; margin-bottom:20px;">Available Doctors</h2>
+
+{% for doctor in doctors %}
+
+<div class="card">
+
+    <div>
+        <div class="card-title">
+            Dr. {{ doctor.name }}
+        </div>
+
+        <div class="card-sub">
+            {{ doctor.specialization }}
+        </div>
+
+        <div style="font-size:14px; color:#444; margin-top:6px;">
+            🩺 {{ doctor.experience }} yrs experience  
+            ⭐ {{ doctor.rating }}
+        </div>
+
+        <div style="font-weight:bold; margin-top:6px;">
+            ₹{{ doctor.fee }} Consultation
+        </div>
+    </div>
+
+    {% if user.is_authenticated %}
+        <a href="{% url 'book' doctor.id %}" class="btn">
+            Book
+        </a>
+    {% else %}
+        <a href="{% url 'login' %}" class="btn" style="background:gray;">
+            Login
+        </a>
+    {% endif %}
+
+</div>
+
+{% empty %}
+<p style="text-align:center;">No doctors available.</p>
+{% endfor %}
+
+{% endblock %}

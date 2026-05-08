@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Hospital System</title>
+
+    <style>
+        :root {
+            --primary: #4f46e5;
+            --bg: #f5f7fb;
+            --text: #333;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+        }
+
+        /* NAVBAR */
+        .navbar {
+            background: linear-gradient(90deg, #4f46e5, #4338ca);
+            color: white;
+            padding: 15px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navbar .left {
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .navbar a {
+            margin-left: 20px;
+            text-decoration: none;
+            color: white;
+            font-size: 14px;
+            transition: 0.2s;
+        }
+
+        .navbar a:hover {
+            opacity: 0.8;
+        }
+
+        .user-text {
+            margin-left: 20px;
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        /* MAIN CONTAINER (FIXED PERFECT WIDTH) */
+        .container {
+            max-width: 1100px;
+            margin: 30px auto;
+            padding: 20px;
+        }
+
+        /* CARD STYLE (NEW 🔥) */
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 18px;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            transition: all 0.25s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+
+        .card-title {
+            font-weight: 600;
+            font-size: 17px;
+        }
+
+        .card-sub {
+            font-size: 13px;
+            color: #777;
+        }
+
+        /* BUTTON */
+        .btn {
+            text-decoration: none;
+            background: var(--primary);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 13px;
+            transition: 0.2s;
+        }
+
+        .btn:hover {
+            opacity: 0.85;
+            transform: scale(1.05);
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+    <div class="navbar">
+        <div class="left">Hospital System</div>
+
+        <div>
+            <a href="/">Home</a>
+            <a href="{% url 'about' %}">About</a>
+            <a href="{% url 'doctors' %}">Doctors</a>
+            <a href="{% url 'hospitals' %}">Hospitals</a>
+
+            {% if user.is_authenticated %}
+                <span class="user-text">Hi, {{ user.username }}</span>
+                <a href="{% url 'dashboard' %}">Dashboard</a>
+                <a href="{% url 'appointments' %}">Appointments</a>
+                <a href="{% url 'logout' %}">Logout</a>
+            {% else %}
+                <a href="{% url 'login' %}">Login</a>
+                <a href="{% url 'register' %}">Register</a>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- CONTENT -->
+    <div class="container">
+        {% block content %}
+        {% endblock %}
+    </div>
+
+</body>
+</html>

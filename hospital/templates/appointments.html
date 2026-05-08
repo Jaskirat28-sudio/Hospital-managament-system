@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h2 style="margin-bottom:20px;">My Appointments</h2>
+
+{% for a in appointments %}
+
+<div class="card">
+
+    <div>
+        <div class="card-title">{{ a.patient_name }}</div>
+
+        <div class="card-sub">
+            Doctor: {{ a.doctor.name }}
+        </div>
+
+        <div class="card-sub">
+            Date: {{ a.appointment_date }}
+        </div>
+
+        <div class="card-sub">
+            Status: 
+            <span style="
+                font-weight:bold;
+                color:
+                {% if a.status == 'Approved' %}green
+                {% elif a.status == 'Rejected' %}red
+                {% else %}orange
+                {% endif %}
+            ">
+                {{ a.status }}
+            </span>
+        </div>
+    </div>
+
+    {% if user.is_staff and a.status == "Pending" %}
+    <div style="display:flex; gap:10px;">
+
+        <a href="{% url 'approve' a.id %}" class="btn" style="background: green;">
+            Approve
+        </a>
+
+        <a href="{% url 'reject' a.id %}" class="btn" style="background: red;">
+            Reject
+        </a>
+
+    </div>
+    {% endif %}
+
+</div>
+
+{% empty %}
+<p style="text-align:center;">No appointments found.</p>
+{% endfor %}
+
+{% endblock %}

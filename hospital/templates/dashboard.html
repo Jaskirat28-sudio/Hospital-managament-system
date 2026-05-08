@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1 style="margin-bottom:20px;">User Dashboard</h1>
+
+<!-- STATS -->
+<div style="display:flex; gap:15px; flex-wrap:wrap; margin-bottom:25px;">
+
+    <div class="card" style="flex:1; text-align:center;">
+        <div class="card-title">Total</div>
+        <div class="card-sub">{{ total }} Appointments</div>
+    </div>
+
+    <div class="card" style="flex:1; text-align:center;">
+        <div class="card-title">Pending</div>
+        <div class="card-sub" style="color:orange;">{{ pending }}</div>
+    </div>
+
+    <div class="card" style="flex:1; text-align:center;">
+        <div class="card-title">Approved</div>
+        <div class="card-sub" style="color:green;">{{ approved }}</div>
+    </div>
+
+    <div class="card" style="flex:1; text-align:center;">
+        <div class="card-title">Rejected</div>
+        <div class="card-sub" style="color:red;">{{ rejected }}</div>
+    </div>
+
+</div>
+
+<hr>
+
+<h2 style="margin-top:20px;">My Appointments</h2>
+
+{% for a in appointments %}
+
+<div class="card">
+    
+    <div>
+        <div class="card-title">{{ a.patient_name }}</div>
+
+        <div class="card-sub">
+            Dr. {{ a.doctor.name }} | {{ a.appointment_date }}
+        </div>
+
+        <div class="card-sub">
+            Status: 
+            <span style="
+                font-weight:bold;
+                color:
+                {% if a.status == 'Approved' %}green
+                {% elif a.status == 'Rejected' %}red
+                {% else %}orange
+                {% endif %}
+            ">
+                {{ a.status }}
+            </span>
+        </div>
+    </div>
+
+    {% if a.status == "Pending" %}
+        <a href="{% url 'cancel' a.id %}" class="btn" style="background:red;">
+            Cancel
+        </a>
+    {% endif %}
+
+</div>
+
+{% empty %}
+<p style="text-align:center;">No appointments yet.</p>
+{% endfor %}
+
+{% endblock %}

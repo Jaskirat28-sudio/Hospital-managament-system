@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1>Book Appointment with {{ doctor.name }}</h1>
+
+<!-- Show messages -->
+{% if messages %}
+    {% for message in messages %}
+        <p style="color:red;">{{ message }}</p>
+    {% endfor %}
+{% endif %}
+
+<!--  Show doctor availability -->
+<h3>Doctor Available On:</h3>
+<ul>
+    {% for a in availability %}
+        <li>
+            {{ a.day }} ({{ a.available_from }} - {{ a.available_to }})
+        </li>
+    {% empty %}
+        <li>No availability added yet</li>
+    {% endfor %}
+</ul>
+
+<br>
+
+<form method="POST">
+    {% csrf_token %}
+
+    <label>Your Name:</label><br>
+    <input type="text" name="name" required><br><br>
+
+    <label>Your Email:</label><br>
+    <input type="email" name="email" required><br><br>
+
+    <label>Select Date:</label><br>
+    <input type="date" name="date" required><br><br>
+
+    <label>Select Time:</label><br>
+    <input type="time" name="time" required><br><br>
+
+    <label>Message:</label><br>
+    <textarea name="message"></textarea><br><br>
+
+    <button type="submit">Book Appointment</button>
+</form>
+
+{% endblock %}

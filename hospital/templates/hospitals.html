@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1 style="margin-bottom:20px;">All Hospitals</h1>
+
+{% for hospital in hospitals %}
+
+<div class="card">
+
+    <div>
+        <div class="card-title">
+            {{ hospital.name }}
+        </div>
+
+        <div class="card-sub" style="margin-top:5px;">
+            {{ hospital.description }}
+        </div>
+    </div>
+
+</div>
+
+{% empty %}
+<p style="text-align:center;">No hospitals available.</p>
+{% endfor %}
+
+{% endblock %}
